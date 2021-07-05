@@ -249,16 +249,156 @@ def blackjack(num1, num2, num3):
     #         return "BUST"
     # Nice way of it
 
-    if sum((num1,num2,num3)) <= 21:
-        return sum((num1,num2,num3))
+    if sum((num1, num2, num3)) <= 21:
+        return sum((num1, num2, num3))
     else:
-        if sum((num1,num2,num3)) <= 31 and 11 in (num1,num2,num3):
-            return sum((num1,num2,num3)) - 10
+        if sum((num1, num2, num3)) <= 31 and 11 in (num1, num2, num3):
+            return sum((num1, num2, num3)) - 10
         else:
             return "BUST"
-
 
 
 # print(blackjack(5,6,7))     #--> 18
 # print(blackjack(9,9,9))     #--> 'BUST'
 # print(blackjack(9,9,11))    #--> 19
+
+def summer_69(arr):
+    """
+    SUMMER OF '69: Return the sum of the numbers in the array, except ignore sections of numbers starting
+    with a 6 and extending to the next 9 (every 6 will be followed by at least one 9).
+    Return 0 for no numbers.
+
+    summer_69([1, 3, 5]) --> 9
+    summer_69([4, 5, 6, 7, 8, 9]) --> 9
+    summer_69([2, 1, 6, 9, 11]) --> 14
+
+    :param arr:
+
+    :return: 0 or no number
+
+    """
+    total = 0
+    skip = False
+    for num in arr:
+        if num != 6 and skip is False:
+            total = total + num
+        elif num == 6:
+            skip = True
+            continue
+        elif num == 9:
+            skip = False
+            continue
+
+    return total
+
+
+# # --> 9
+# print(summer_69([1, 3, 5]))
+#
+# # --> 9
+#
+# print(summer_69([4, 5, 6, 7, 8, 9]))
+#
+# # #--> 14
+#
+# print(summer_69([2, 1, 6, 9, 11]))
+
+def spy_game(nums):
+    """
+    SPY GAME: Write a function that takes in a list of integers and returns True if it contains 007 in order
+
+    spy_game([1,2,4,0,0,7,5]) --> True
+
+    spy_game([1,0,2,4,0,5,7]) --> True
+
+    spy_game([1,7,2,0,4,5,0]) --> False
+
+    :param nums:
+
+    :return:
+
+    """
+    # found_0 = False
+    # found_0_0 = False
+    # found_0_0_7 = False
+    #
+    # for index in range(0, len(nums), 1):
+    #     if (nums[index] == 0) and (found_0 is False):
+    #         found_0 = True
+    #     elif (nums[index] == 0) and (found_0 is True) and (found_0_0 is False):
+    #         found_0_0 = True
+    #     elif (nums[index] == 7) and (found_0 is True) and (found_0_0 is True):
+    #         found_0_0_7 = True
+    #         return found_0_0_7
+    #
+    # return False
+
+# better and simplified version
+#     to_be_found = [0, 0, 7, 'x']
+#     for item in nums:
+#         if item == to_be_found[0]:
+#             to_be_found.pop(0)
+#
+#     return len(to_be_found) == 1
+#
+#
+# # --> True
+# print(spy_game([1, 2, 4, 0, 0, 7, 5]))
+#
+# # --> True
+# print(spy_game([1, 0, 2, 4, 0, 5, 7]))
+#
+# # --> False
+# print(spy_game([1, 7, 2, 0, 4, 5, 0]))
+
+
+def count_primes(num):
+
+    """
+    COUNT PRIMES: Write a function that returns the number of prime numbers that exist up to and
+    including a given number
+
+    count_primes(100) --> 25
+    By convention, 0 and 1 are not prime.
+
+    :param num:
+    :return: integer
+    """
+    # write a small function to check if the number is prime or not
+
+    def is_prime(number):
+        index = 2
+        for index in range(index, number, 1):
+            if number % index == 0:
+                return False
+            else:
+                continue
+
+        return True
+
+    count_of_prime = set()
+
+    for prime in range(2, num, 1):
+        if is_prime(prime):
+            count_of_prime.add(prime)
+
+    return len(count_of_prime)
+
+# print(count_primes(1000))
+
+
+def print_BIG(letter):
+
+    patterns = {1: '  *  ', 2: ' * * ', 3: '*   *', 4: '*****', 5: '**** ', 6: '   * ', 7: ' *   ', 8: '*   * ',
+                9: '*    '}
+    alphabet = {'A': [1, 2, 4, 3, 3], 'B': [5, 3, 5, 3, 5], 'C': [4, 9, 9, 9, 4], 'D': [5, 3, 3, 3, 5],
+                'E': [4, 9, 4, 9, 4]}
+    for pattern in alphabet[letter.upper()]:
+        print(patterns[pattern])
+
+
+# print_BIG('a')
+# print_BIG('b')
+# print_BIG('c')
+# print_BIG('d')
+# print_BIG('e')
