@@ -158,20 +158,20 @@ def ispangram(strtoCheck, alphabet= string.ascii_lowercase):
 
     """
 
-    finalStr = ""
-    set_finalStr = set()
-    lst_lower_str2Check = strtoCheck.lower().split()
-    lst_lower_str2Check.sort()
-    for item in lst_lower_str2Check:
-        finalStr = finalStr + item
+    # finalStr = ""
+    # set_finalStr = set()
+    # lst_lower_str2Check = strtoCheck.lower().split()
+    # lst_lower_str2Check.sort()
+    # for item in lst_lower_str2Check:
+    #     finalStr = finalStr + item
+    # set_finalStr = set(finalStr)
+    # set_alphabet = set(alphabet)
+    # return set_finalStr == set_alphabet
 
-    set_finalStr = set(finalStr)
+    #another optimized version
     set_alphabet = set(alphabet)
-
-    if set_finalStr == set_alphabet:
-        return True
-    else:
-        return False
+    set_finalStr = set(strtoCheck.replace(" ", '').lower())
+    return set_finalStr == set_alphabet
 
 
 print(ispangram("The quick brown fox jumps over the lazy dog"))
