@@ -6,17 +6,17 @@ def display_board(available_options):
 
     """
 
-    print("Available Options in displayBoard", available_options)
-    print(available_options[9])
+    # print("Available Options in displayBoard", available_options)
+    # print(available_options[9])
     print(" ", available_options[1], "|", available_options[2], "|", available_options[3])
-    print("-", "-", "-", "-", "-","-")
+    print("-", "-", "-", "-", "-","-", "-")
     print(" ", available_options[4], "|", available_options[5], "|", available_options[6])
-    print("-", "-", "-", "-", "-", "-")
+    print("-", "-", "-", "-", "-", "-", "-")
     print(" ", available_options[7], "|", available_options[8], "|", available_options[9])
     # print("-", "-", "-", "-", "-", "-")
 
 
-def get_user_choice(player):
+def get_user_choice(player, valid_choice_list):
     """
     This function displays all choices to the players
 
@@ -25,25 +25,20 @@ def get_user_choice(player):
     """
 
     valid_choice = False
-    is_choice_in_range = False
 
     while not valid_choice:
-        player_choice = input(f"{player} please enter the position where you want to place your choice: '1-9' ")
-        is_choice_digit = player_choice.isdigit()
-        if is_choice_digit is False:
-            print(f"{player} sorry this is not a valid choice")
-            continue
-        else:
-            is_choice_in_range = int(player_choice) in range(1, 10)
-            if is_choice_in_range:
+        player_choice = input(f"{player} please enter the position where you want to place your choice: "
+                              f"{valid_choice_list} : ")
+        if player_choice.isdigit():
+            if int(player_choice) in valid_choice_list:
+                valid_choice = True
                 return player_choice
             else:
-                print("{player} sorry this is not a valid choice, the number has to be between 1-9")
+                print(f"{player} sorry this is not a valid choice, the number has to be between {valid_choice_list} :")
                 continue
-
-
-# def user_wants_to_continue():
-#     return input("Do you like to continue to complete the game (Y/N) : ")
+        else:
+            print(f"{player} sorry this is not a valid choice, the number has to be between {valid_choice_list} :")
+            continue
 
 
 def whose_turn_is_it(counter):
@@ -70,19 +65,78 @@ def update_available_options(count, available_options, user_choice):
 def user_wants_to_continue():
 
     message = "Do you like to continue to complete the game (Y/N) : "
+    user_response = input(message)
 
-    if input(message).upper() == "Y":
+    if user_response.upper() == "Y":
         return True
-    elif input(message).upper() == "N":
+    elif user_response.upper() == "N":
         return False
-    else:
-        print("This is not right option :")
-        return user_wants_to_continue()
+    # else:
+    #     print("This is not right option :")
+    #     return user_wants_to_continue()
+
+
+def is_winning(filled_dict):
+
+    # check row#1
+    if (filled_dict[1] == filled_dict[2]) and (filled_dict[2] == filled_dict[3]) \
+            and (filled_dict[1] != " " and filled_dict[2] != " " and filled_dict[3] != " "):
+        return True
+
+    # check row#2
+    if (filled_dict[4] == filled_dict[5]) and (filled_dict[5] == filled_dict[6]) \
+            and (filled_dict[4] != " " and filled_dict[5] != " " and filled_dict[6] != " "):
+        return True
+
+    # check row#3
+    if (filled_dict[7] == filled_dict[8]) and (filled_dict[8] == filled_dict[9]) \
+            and (filled_dict[7] != " " and filled_dict[8] != " " and filled_dict[9] != " "):
+        return True
+
+    # check column#1
+    if (filled_dict[1] == filled_dict[4]) and (filled_dict[4] == filled_dict[7]) \
+            and (filled_dict[1] != " " and filled_dict[4] != " " and filled_dict[7] != " "):
+        return True
+
+    # check column#2
+    if (filled_dict[2] == filled_dict[5]) and (filled_dict[5] == filled_dict[8]) \
+            and (filled_dict[2] != " " and filled_dict[5] != " " and filled_dict[8] != " "):
+        return True
+
+    # check column#3
+    if (filled_dict[3] == filled_dict[6]) and (filled_dict[6] == filled_dict[9]) \
+            and (filled_dict[3] != " " and filled_dict[6] != " " and filled_dict[9] != " "):
+        return True
+
+    # check diagonal#1
+    if (filled_dict[1] == filled_dict[5]) and (filled_dict[5] == filled_dict[9])\
+            and (filled_dict[1] != " " and filled_dict[5] != " " and filled_dict[9] != " "):
+        return True
+
+    # check diagonal#2
+    if (filled_dict[3] == filled_dict[5]) and (filled_dict[5] == filled_dict[7]) \
+            and (filled_dict[3] != " " and filled_dict[5] != " " and filled_dict[7] != " "):
+        return True
+
+    return False
+
+
+def get_valid_choice_list(options_dict):
+
+    valid_list_keys = list()
+
+    for key, value in options_dict.items():
+        if value == " ":
+            valid_list_keys.append(key)
+        else:
+            continue
+
+    return valid_list_keys
 
 
 def play_tic_tac_toe_game():
 
-    available_options = {1: "", 2: "", 3: "", 4: "", 5: "", 6: "", 7: "", 8: "", 9: ""}
+    available_options = {1: " ", 2: " ", 3: " ", 4: " ", 5: " ", 6: " ", 7: " ", 8: " ", 9: " "}
 
     user_choice = None
     user_continue = True
@@ -94,12 +148,22 @@ def play_tic_tac_toe_game():
 
         if user_wants_to_continue():
             player_turn = whose_turn_is_it(count)
-            user_choice = int(get_user_choice(player_turn))
+
+            # get the available values which has not been chosen by user
+            valid_choice_list = get_valid_choice_list(available_options)
+            # get user choice
+            user_choice = int(get_user_choice(player_turn,valid_choice_list))
+            # update the user choice in
             update_available_options(count, available_options, user_choice)
-            count += 1
-            continue
+            if is_winning(available_options):
+                display_board(available_options)
+                print("Congratulations " + player_turn + " won the game ! ")
+                user_continue = False
+            else:
+                count += 1
+                continue
         else:
-            break
+            user_continue = False
 
 
 play_tic_tac_toe_game()
