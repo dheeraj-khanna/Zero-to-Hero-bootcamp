@@ -6,8 +6,6 @@ def display_board(available_options):
 
     """
 
-    # print("Available Options in displayBoard", available_options)
-    # print(available_options[9])
     print(" ", available_options[1], "|", available_options[2], "|", available_options[3])
     print("-", "-", "-", "-", "-","-", "-")
     print(" ", available_options[4], "|", available_options[5], "|", available_options[6])
@@ -71,9 +69,6 @@ def user_wants_to_continue():
         return True
     elif user_response.upper() == "N":
         return False
-    # else:
-    #     print("This is not right option :")
-    #     return user_wants_to_continue()
 
 
 def is_winning(filled_dict):
@@ -137,8 +132,6 @@ def get_valid_choice_list(options_dict):
 def play_tic_tac_toe_game():
 
     available_options = {1: " ", 2: " ", 3: " ", 4: " ", 5: " ", 6: " ", 7: " ", 8: " ", 9: " "}
-
-    user_choice = None
     user_continue = True
     count = 1
 
