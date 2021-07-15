@@ -54,12 +54,12 @@ def check_user_wants_to_continue():
     while not valid_choice:
 
         user_choice = input(user_message)
-        print("User Choice = ",user_choice)
+        # print("User Choice = ", user_choice)
         if user_choice.upper() == "Y":
             valid_choice = True
             return True
         elif user_choice.upper() == "N":
-            valid_choice = False
+            valid_choice = True
             return False
         else:
             print(msg_invalid_choice)
@@ -80,14 +80,12 @@ def play_rock_paper_scissor_game():
     options_tup = ("Rock", "Paper", "Scissor")
     player_points = 0
     computer_points = 0
-
     player_wants_to_continue = check_user_wants_to_continue()
-    print(player_wants_to_continue)
 
     while player_wants_to_continue:
-        player_option = get_valid_game_option()
+        player_option = get_valid_game_option().capitalize()
         computer_option_num = random.randint(1, 3)
-        computer_option = choice_conversion(computer_option_num)
+        computer_option = choice_conversion(computer_option_num).capitalize()
         if player_option in options_tup:
             if player_option == computer_option:
                 print(f"It is a tie as you have chosen {player_option} and computer have chosen {computer_option}")
@@ -122,6 +120,7 @@ def play_rock_paper_scissor_game():
                     print(f"You lose 1 point as you have chosen {player_option} "
                           f"and computer have chosen {computer_option}")
                     computer_points += 1
+
         player_wants_to_continue = check_user_wants_to_continue()
 
     if player_points > 0 or computer_points > 0:
