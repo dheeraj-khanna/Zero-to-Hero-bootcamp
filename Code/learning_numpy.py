@@ -353,4 +353,4 @@ def playing_with_keras():
 # more_on_reshape_array()
 # numpy_as_tensors()
 
-playing_with_keras()
+# playing_with_keras()
